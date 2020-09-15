@@ -1,0 +1,20 @@
+#!/bin/sh
+
+indent() {
+	sed -u 's/^/       /'
+}
+
+echo "-----> Downloading and installing iSyntax libraries and executables"
+
+TARBALL_URL='https://s3.amazonaws.com/proscia-viewer/buildpacks/isyntax.tar.gz'
+
+OUTPUT_DIR="${1}/vendor/isyntax"
+
+mkdir -p $OUTPUT_DIR
+
+curl -s $TARBALL_URL | tar xz -C $OUTPUT_DIR
+
+if [ $? != 0 ]; then
+	echo "Error downloading isyntax and unpacking to build dir" | indent
+	exit 1
+fi
